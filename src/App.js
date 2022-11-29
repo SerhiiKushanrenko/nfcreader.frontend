@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 function App() {
   let guid = 0
-  const [test1,setTest] = useState();
+  const [test1,setTest] = useState(20);
  const URL = 'https://localhost:7241/api/User';
  
   function test(){
