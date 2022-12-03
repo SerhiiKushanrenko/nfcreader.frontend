@@ -15,14 +15,14 @@ function App() {
   var ourGuid = uuidv4();
   
   const URL = "https://localhost:7241/api/User";
-  const URLCLOUD = "https://localhost:7079/checkHub";
-  const URLPOSTCRED = "https://localhost:7079/api/AddGuid"
+  const URLCLOUD = "http://3.10.151.65:8080/checkHub";
+  const URLPOSTCRED = "http://3.10.151.65:8080/api/AddGuid"
   
 
 
   const signalR = () => {
     const connection = new HubConnectionBuilder()
-      .withUrl("https://localhost:7079/checkHub")
+      .withUrl(URLCLOUD)
       .build();
 
       connection.start().then( () => { sendData(connection.connection.connectionId);})
@@ -32,11 +32,8 @@ function App() {
       connection.on("Notify", (result) =>{
         console.log(result);
          setVisible(result)
+         setIsLoading(false)
       })
-
-      // if (visible === true) {
-      //   setIsLoading(true)
-      // }
       
   };
 
