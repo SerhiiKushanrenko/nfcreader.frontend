@@ -6,15 +6,19 @@ import LoginButton from "./Components/LoginButton";
 import CircularIndeterminate from "./Components/Progress";
 import { v4 as uuidv4 } from 'uuid';
 import { HttpTransportType, HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
+import classes from "./Components/StyleCss/P.Module.Css"
+
 
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [guid, setGuid] = useState();
   const [visible,setVisible] = useState(false)
+  const [name,setName] = useState("Login");
+  const [isLogined,setIsLogined] = useState(false);
   var ourGuid = uuidv4();
   
-  const URL = "https://localhost:7241/api/User";
+  const URL = "http://localhost:8080/api/User";
   const URLCLOUD = "http://3.10.151.65:8080/checkHub";
   const URLPOSTCRED = "http://3.10.151.65:8080/api/AddGuid"
   
@@ -33,6 +37,12 @@ function App() {
         console.log(result);
          setVisible(result)
          setIsLoading(false)
+         
+        if (result) {
+          setName("Exit")
+          setIsLogined(true)
+        }
+        
       })
       
   };
@@ -50,12 +60,18 @@ function App() {
 
 
   function Start() {
-   
+    if (isLogined) {
+      setName("Login")
+      setVisible(false)
+      setIsLogined(false)
+      return;
+    }
     setIsLoading(true);
     axios.post(URL,
       {id:ourGuid}
     )
     signalR();
+    
   }
 
   
@@ -63,8 +79,8 @@ function App() {
 
   return (
     <div className="App">
-      <LoginButton onClick={Start}>fdsfds</LoginButton>
-      {isLoading ? <CircularIndeterminate /> : <p>{guid}</p>}
+       <LoginButton onClick={Start} name={name}></LoginButton> 
+      {isLoading ? <CircularIndeterminate /> : <p className={classes.important}>{guid}</p>}
       {visible? <p>Welcome</p>: null}
     </div>
   );
