@@ -81,7 +81,7 @@ function App() {
     <div className="App">
        <LoginButton onClick={Start} name={name}></LoginButton> 
       {isLoading ? <CircularIndeterminate /> : <p className={classes.important}>{guid}</p>}
-      {visible? <p>Welcome</p>: null}
+      {visible? <p className={classes.important}>Welcome</p>: null}
     </div>
   );
 }
