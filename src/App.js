@@ -19,9 +19,10 @@ function App() {
   var ourGuid = uuidv4();
   
   const URL = "http://localhost:8080/api/User";
-  const URLCLOUD = "http://3.10.151.65:8080/checkHub";
-  const URLPOSTCRED = "http://3.10.151.65:8080/api/AddGuid"
-  
+  const URLCLOUD = "https://cloudnfc.tk/checkHub";
+  const URLPOSTCRED = "https://cloudnfc.tk/api/AddGuid"
+  const EXIT = "Exit"
+  const LOGIN = "Login"
 
 
   const signalR = () => {
@@ -39,7 +40,7 @@ function App() {
          setIsLoading(false)
          
         if (result) {
-          setName("Exit")
+          setName(EXIT)
           setIsLogined(true)
         }
         
@@ -61,7 +62,7 @@ function App() {
 
   function Start() {
     if (isLogined) {
-      setName("Login")
+      setName(LOGIN)
       setVisible(false)
       setIsLogined(false)
       return;
