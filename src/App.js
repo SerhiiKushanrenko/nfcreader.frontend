@@ -16,6 +16,7 @@ function App() {
   const [visible,setVisible] = useState(false)
   const [name,setName] = useState("Login");
   const [isLogined,setIsLogined] = useState(false);
+  const [device,setDevice] = useState();
   var ourGuid = uuidv4();
   
   const URL = "http://localhost:8080/api/User";
@@ -34,9 +35,10 @@ function App() {
 
       console.log(connection);
 
-      connection.on("Notify", (result) =>{
+      connection.on("Notify", (result,deviceId) =>{
         console.log(result);
          setVisible(result)
+         setDevice(deviceId)
          setIsLoading(false)
          
         if (result) {
@@ -58,8 +60,6 @@ function App() {
      
   }
 
-
-
   function Start() {
     if (isLogined) {
       setName(LOGIN)
@@ -75,14 +75,11 @@ function App() {
     
   }
 
-  
-  
-
   return (
     <div className="App">
        <LoginButton onClick={Start} name={name}></LoginButton> 
       {isLoading ? <CircularIndeterminate /> : <p className={classes.important}>{guid}</p>}
-      {visible? <p className={classes.important}>Welcome</p>: null}
+      {visible? <p className={classes.important}>Welcome {device}</p>: null}
     </div>
   );
 }
