@@ -17,11 +17,13 @@ function App() {
   const [name,setName] = useState("Login");
   const [isLogined,setIsLogined] = useState(false);
   const [device,setDevice] = useState();
+  const [userName,setUserName] = useState();
+  const [errorUsbDevice,setErrorUsbDevice] = useState(false) 
   var ourGuid = uuidv4();
   
-  const URL = "http://localhost:8080/api/User";
-  const URLCLOUD = "https://cloudnfc.tk/checkHub";
-  const URLPOSTCRED = "https://cloudnfc.tk/api/AddGuid"
+  const URL = "https://localhost:7241/api/User"; 
+  const URLCLOUD = "https://localhost:7079/checkHub"; //https://localhost:7079/checkHub    https://cloudnfc.tk/checkHub
+  const URLPOSTCRED = "https://localhost:7079/api/AddGuid" // https://localhost:7079/api/AddGuid   https://cloudnfc.tk/api/AddGuid
   const EXIT = "Exit"
   const LOGIN = "Login"
 
@@ -35,13 +37,19 @@ function App() {
 
       console.log(connection);
 
-      connection.on("Notify", (result,deviceId) =>{
+      connection.on("Notify", (result,deviceId,name) =>{
         console.log(result);
          setVisible(result)
          setDevice(deviceId)
+         setUserName(name)
          setIsLoading(false)
          
         if (result) {
+          setName(EXIT)
+          setIsLogined(true)
+        }
+        if (!result) {
+          setErrorUsbDevice(true)
           setName(EXIT)
           setIsLogined(true)
         }
@@ -65,6 +73,7 @@ function App() {
       setName(LOGIN)
       setVisible(false)
       setIsLogined(false)
+      setErrorUsbDevice(false)
       return;
     }
     setIsLoading(true);
@@ -79,7 +88,10 @@ function App() {
     <div className="App">
        <LoginButton onClick={Start} name={name}></LoginButton> 
       {isLoading ? <CircularIndeterminate /> : <p className={classes.important}>{guid}</p>}
-      {visible? <p className={classes.important}>Welcome {device}</p>: null}
+      {visible? <p className={classes.important}>Welcome</p>: null}
+      {errorUsbDevice? <p className={classes.important}>Error, Check Usb Device and try again</p>: null}
+      {visible? <p className={classes.important}>User: {userName}</p>: null}
+      {visible? <p className={classes.important}>DeviceId: {device}</p>: null}
     </div>
   );
 }
