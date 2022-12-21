@@ -21,7 +21,7 @@ function App() {
   const [errorUsbDevice,setErrorUsbDevice] = useState(false) 
   var ourGuid = uuidv4();
   
-  const URL = "https://localhost:7241/api/User"; 
+  const URLSendGuid = "https://localhost:7241/api/User"; 
   const URLCLOUD = "https://localhost:7079/checkHub"; //https://localhost:7079/checkHub    https://cloudnfc.tk/checkHub
   const URLPOSTCRED = "https://localhost:7079/api/AddGuid" // https://localhost:7079/api/AddGuid   https://cloudnfc.tk/api/AddGuid
   const EXIT = "Exit"
@@ -77,9 +77,8 @@ function App() {
       return;
     }
     setIsLoading(true);
-    axios.post(URL,
-      ourGuid
-    )
+    const config = { headers: {'Content-Type': 'application/json'} };
+    axios.post(URLSendGuid,ourGuid,config)
     signalR();
     
   }
