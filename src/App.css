@@ -1,6 +1,18 @@
+html{
+  background-color:  #B0E0E6;
+}
 
 .App {
   text-align: center;
+}
+
+.header {
+  padding: 10px;
+  text-align: center;
+  background: #20B2AA;
+  color: white;
+  font-size: 10px;
+  opacity: 0.7;
 }
 
 p{text-decoration-line: underline;}

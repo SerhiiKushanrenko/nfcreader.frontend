@@ -86,6 +86,7 @@ function App() {
 
   return (
     <div className="App">
+      <div class="header"><h1>NFCReader.v1</h1> </div>
        <LoginButton onClick={Start} name={name}></LoginButton> 
       {isLoading ? <CircularIndeterminate /> : <p className={classes.important}>{guid}</p>}
       {visible? <p className={classes.important}>Welcome</p>: null}
